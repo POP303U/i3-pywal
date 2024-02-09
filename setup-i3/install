@@ -1,0 +1,138 @@
+#!/bin/sh
+
+BASE_PACKAGES=(
+"xorg"
+"xorg-xinit"
+"i3-wm"
+"noto-fonts"
+"noto-fonts-emoji"
+"ttf-jetbrains-mono-nerd"
+"ttf-cascadia-code-nerd"
+"xclip"
+"xdotool"
+"maim"
+"rofi"
+"lxpolkit"
+"picom-ftlabs-git"
+"autotiling"
+"polybar"
+"dunst"
+"alacritty"
+"networkmanager"
+"python-pywal"
+"bluez" 
+"bluez-utils"
+)
+
+BLUE='\033[1;34m'
+RED='\033[1;31m'
+CYAN='\033[01;36m'
+YELLOW='\033[01;33m'
+WHITE_BOLD="\033[1;38;5;15m"
+GREEN="\033[01;32m"
+RESET='\033[0m'
+PURPLE='\033[01;35m'
+WHITE='\033[01;37m'
+
+install_yay() {
+    YAY_EXISTS=/sbin/yay
+
+    # initialize [multilib] if not enables
+    echo -e "[${PURPLE}info${RESET}] Enabling multilib"
+    sudo sed -i '/#\[multilib\]/,/#Include = \/etc\/pacman\.d\/mirrorlist/c\[multilib]\nInclude = /etc/pacman.d/mirrorlist' /etc/pacman.conf
+    echo -e "[${PURPLE}info${RESET}] Syncing multilib repositories"
+    sudo pacman -Syy --noconfirm >/dev/null 2>&1
+
+    if [ -f "$YAY_EXISTS" ]; then
+        AUR_HELPER=yay
+        echo -e "[${PURPLE}info${RESET}] Yay was detected, using yay..."
+    else
+        echo -e "[${PURPLE}info${RESET}] Performing full system sync"
+        sudo pacman -Syu >/dev/null 2>&1 
+
+        # install yay
+        sudo pacman -S --needed base-devel --noconfirm >/dev/null 2>&1
+
+        git clone https://aur.archlinux.org/yay.git >/dev/null 2>&1
+        echo -e "[${BLUE}ok${RESET}] Cloned yay from the AUR"
+
+        cd yay
+        echo -e "[${PURPLE}info${RESET}] Installing yay..."
+        makepkg -si --noconfirm && echo -e "[${BLUE}ok${RESET}] Building yay from the AUR"
+
+        echo -e "[${PURPLE}info${RESET}] Removing temporary files..."
+        cd ..
+        rm -rf yay
+
+        AUR_HELPER=yay
+    fi
+}
+
+start_wireless() {
+    # Start the bluetooth service
+    echo -e "[${PURPLE}info${RESET}] Starting the Bluetooth Service..."
+    sudo systemctl enable --now bluetooth.service >/dev/null 2>&1
+
+    sleep 2
+
+    ### Disable wifi powersave mode ###
+    echo -e "[${PURPLE}info${RESET}] Disabling wifi powersave..." 
+
+    LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    echo -e "[${PURPLE}info${RESET}] The following has been added to $LOC.\n"
+    echo -e "[connection]\nwifi.powersave = 2\n" | sudo tee -a $LOC
+
+    echo -e "[${PURPLE}info${RESET}] Restarting NetworkManager service..."
+    sudo systemctl restart NetworkManager
+    echo -e "[${PURPLE}info${RESET}] Waiting for Internet to reconnect..."
+    sleep 5
+}
+
+copy_config() {
+    cp -r ../configs/alacritty     ~/.config && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
+    cp -r ../configs/polybar       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied polybar to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy polybar to ~/.config"
+    cp -r ../configs/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy dunst to ~/.config"
+    cp -r ../configs/picom         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied picom to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy picom to ~/.config"
+    cp -r ../configs/rofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied rofi to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
+    cp -r ../configs/i3            ~/.config && echo -e "[${BLUE}ok${RESET}] Copied i3 to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy i3 to ~/.config"
+    cp -r ../configs/.tmux.conf            ~ && echo -e "[${BLUE}ok${RESET}] Copied .tmux.conf to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy tmux to ~/"
+    cp -r ../configs/.bashrc               ~ && echo -e "[${BLUE}ok${RESET}] Copied .bashrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy .bashrc to ~/"
+    cp -r ../configs/.Xmodmap              ~ && echo -e "[${BLUE}ok${RESET}] Copied .Xmodmap to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
+    cp -r ../configs/.xinitrc              ~ && echo -e "[${BLUE}ok${RESET}] Copied .xinitrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
+}
+
+stage_1() {
+    echo -e "[${PURPLE}info${RESET}] Executing Stage 1"
+    mkdir ~/Desktop 2>&1
+    mkdir ~/Pictures 2>&1
+
+    echo -e "[${PURPLE}info${RESET}] Installing base packages"
+    for PACKAGE in "${BASE_PACKAGES[@]}"; do
+        if $AUR_HELPER -S --noconfirm "$PACKAGE" >/dev/null 2>&1; then
+            echo -e "[${BLUE}ok${RESET}] $PACKAGE installed successfully"
+        else
+            echo -e "[${RED}fail${RESET}] $PACKAGE installation failed"
+        fi
+    done
+
+    echo -e "[${PURPLE}info${RESET}] Copying config files..."
+    copy_config 
+
+    echo -e "[${BLUE}ok${RESET}] Installation finished!"
+}
+
+echo -e "
+${GREEN}    _ _____
+${GREEN}   (_)__  /
+${GREEN}  / / /_ < 
+${GREEN} / /___/ / 
+${GREEN}/_//____/ ${RESET}
+
+# ${YELLOW}Easy i3-pywal installer${RESET} #
+
+${WHITE_BOLD}Install dotfiles?: ${RESET}
+"
+read -n1 -rep "(Press Enter to continue) $: " STAGE
+
+install_yay
+stage_1

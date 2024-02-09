@@ -1,0 +1,24 @@
+#!/usr/bin/env sh
+
+if pgrep -x "rofi" >/dev/null; then
+    pkill -x "rofi"
+    exit 0
+fi
+
+case "$1" in
+    "rofi")
+        rofi -show drun -config ~/.config/rofi/config.rasi &
+        ;;
+    "rofi-emoji")
+        rofi -modi emoji -config ~/.config/rofi/config_emoji.rasi -show emoji &
+        ;;
+    "rofi-power")
+        rofi -modi power-menu:~/.config/rofi/scripts/rofi-power-menu -config ~/.config/rofi/config_power.rasi --symbols 'CaskaydiaCove Nerd Font' -show power-menu &
+        ;;
+    *)
+        echo "Invalid choice $1"
+        pkill -x "rofi"
+        ;;
+esac
+
+# ayo this aint working

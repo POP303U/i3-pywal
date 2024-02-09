@@ -1,0 +1,252 @@
+#-------------------------------------------------------------------------#
+#                        _       _ _____                    __ _          #
+#      _ __   ___  _ __ ( )___  (_)___ /    ___ ___  _ __  / _(_) __ _    #
+#     | '_ \ / _ \| '_ \|// __| | | |_ \   / __/ _ \| '_ \| |_| |/ _` |   #
+#     | |_) | (_) | |_) | \__ \ | |___) | | (_| (_) | | | |  _| | (_| |   #
+#     | .__/ \___/| .__/  |___/ |_|____/   \___\___/|_| |_|_| |_|\__, |   #
+#     |_|         |_|                                            |___/    #
+#                                                                         #
+#-------------------------------------------------------------------------#
+
+# Knowing vim bindings is probably mandatory for this config lol
+
+# BASE PACKAGES: autotiling nitrogen picom maim xclip xdotool rofi alacritty alsa-utils
+
+# ------------- #
+# ({VARIABLES}) #
+# ------------- #
+
+set $terminal "alacritty" 
+set $browser "firefox"
+set $alt Mod1
+set $win Mod4
+set $volume_steps 5
+set $font_size 14
+set $inner_gaps_size 10
+set $outer_gaps_size 1
+set $border_size 3
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $sg i3wm.color3 #f0f0f0
+set_from_resource $bg i3wm.color1 #f0f0f0
+
+# ------------------------- #
+#                           #
+# CUSTOM CONFIGS START HERE #
+#                           #
+# ------------------------- #
+
+# Start the specified Terminal 
+bindsym $alt+Return exec --no-startup-id $terminal
+
+# Custom window font
+font pango:CaskaydiaCove Nerd Font, Italic $font_size
+
+#Start all custom services (nitrogen, autotiling, picom, polybar):
+exec --no-startup-id lxpolkit
+exec --no-startup-id dunst
+exec --no-startup-id cmus-discord-rpc
+exec_always --no-startup-id wal -R
+exec_always --no-startup-id xmodmap ~/.Xmodmap
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+
+# rofi 
+bindsym $alt+d exec "~/.config/i3/scripts/manage-rofi rofi"
+bindsym $alt+e exec "~/.config/i3/scripts/manage-rofi rofi-emoji"
+bindsym $alt+p exec "~/.config/i3/scripts/manage-rofi rofi-power"
+
+# pywal
+bindsym $win+Right exec --no-startup-id "~/.config/i3/scripts/pywal-wallpaper -n"
+bindsym $win+Left exec --no-startup-id "~/.config/i3/scripts/pywal-wallpaper -p"
+
+# autoclicker
+bindsym $alt+c exec --no-startup-id ~/.config/autoclicker/clicker_start
+bindsym $alt+v exec --no-startup-id ~/.config/autoclicker/clicker_stop
+
+# thunar
+bindsym $alt+Shift+e exec --no-startup-id thunar
+
+# enable / disable bar
+bindsym $alt+m exec --no-startup-id pkill polybar || $HOME/.config/polybar/launch.sh
+
+# split in horizontal orientation
+bindsym $win+h split h
+
+# split in vertical orientation
+bindsym $win+v split v
+
+# move the currently focused window to the scratchpad
+bindsym $alt+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $alt+minus scratchpad show
+
+# Resizing by 1
+bindsym $alt+Ctrl+l resize shrink width 1 px or 1 ppt
+bindsym $alt+Ctrl+k resize grow height 1 px or 1 ppt
+bindsym $alt+Ctrl+j resize shrink height 1 px or 1 ppt
+bindsym $alt+Ctrl+h resize grow width 1 px or 1 ppt
+
+# Resizing by 10
+bindsym $alt+Ctrl+Shift+l resize shrink width 10 px or 10 ppt
+bindsym $alt+Ctrl+Shift+k resize grow height 10 px or 10 ppt
+bindsym $alt+Ctrl+Shift+j resize shrink height 10 px or 10 ppt 
+bindsym $alt+Ctrl+Shift+h resize grow width 10 px or 10 ppt
+
+# Audiocontrol
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
+bindsym XF86AudioMute        exec --no-startup-id pamixer -t 
+bindsym $alt+F10 exec --no-startup-id pamixer -d 5
+bindsym $alt+F11 exec --no-startup-id pamixer -i 5
+bindsym $alt+F12 exec --no-startup-id pamixer -t
+
+
+# Screenshots
+exec --no-startup-id mkdir ~/Screenshots
+bindsym Print exec --no-startup-id maim "/home/$USER/Screenshots/$(date | tr -c '[:alnum:]' '_').png"
+bindsym Ctrl+Print exec --no-startup-id maim --window $(xdotool getactivewindow) "/home/$USER/Screenshots/$(date | tr -c '[:alnum:]' '_').png"
+bindsym Shift+Print exec --no-startup-id maim --select "/home/$USER/Screenshots/$(date | tr -c '[:alnum:]' '_').png"
+
+
+# Apps ((nvm it work) why no work)
+bindsym $alt+Shift+d exec --no-startup-id rustup doc
+bindsym $alt+Shift+w exec --no-startup-id firefox
+
+# class                 border  backgr. (     ) indica. child_border
+client.focused          $bg     $bg     $fg  $bg       $sg
+client.focused_inactive $bg     $bg     $fg  $bg       $bg
+client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.urgent           $bg     $bg     $fg  $bg       $bg
+client.placeholder      $bg     $bg     $fg  $bg       $bg
+
+client.background       $bg
+
+# Custom gaps + Borders 
+for_window [class="^.*"] border pixel $border_size
+gaps inner $inner_gaps_size
+gaps outer $outer_gaps_size
+
+#bar {
+#    status_command i3status
+#2>/tmp/i3blocks.err /usr/bin/i3blocks -vvv -c ~/.config/i3blocks/i3blocks.conf | tee /tmp/i3blocks.out
+
+#    position                top
+#    tray_output             primary
+#    separator_symbol        " "
+#    workspace_buttons       yes
+#    strip_workspace_numbers no
+#
+#    colors {
+#        background $bg
+#        statusline $fg
+#        separator $fg
+#
+        # light mode
+        # focused_workspace #CECECE #CECECE #000000
+        # active_workspace #333333 #333333 #888888
+        # inactive_workspace #CECECE #333333 #f1f1f1
+        # urgent_workspace #eb709b #eb709b #ffffff
+
+        # dark mode
+#        focused_workspace #ea9a97 #ea9a97 #000000
+#        active_workspace #1f1d2e #1f1d2e #333333
+##        inactive_workspace #1f1d2e #1f1d2e #f1f1f1
+#        urgent_workspace #eb709b #eb709b #ffffff
+#    }
+#}
+
+# ----------------------- #
+#                         #
+# CUSTOM CONFIGS END HERE #
+#                         #
+# ----------------------- #
+
+# Ignore the rest of the file if you don't need any other customization options
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id nm-applet
+
+# Use Mouse+$alt to drag floating windows to their wanted position
+floating_modifier $alt
+
+# kill focused window
+bindsym $alt+Shift+q kill
+
+# change focus
+bindsym $alt+h focus left
+bindsym $alt+j focus down
+bindsym $alt+k focus up
+bindsym $alt+l focus right
+
+# move focused window
+bindsym $alt+Shift+h move left
+bindsym $alt+Shift+j move down
+bindsym $alt+Shift+k move up
+bindsym $alt+Shift+l move right
+
+# enter fullscreen mode for the focused container
+bindsym $alt+f fullscreen toggle
+
+# Switching to workspaces
+bindsym $alt+1 workspace number 1
+bindsym $alt+2 workspace number 2
+bindsym $alt+3 workspace number 3
+bindsym $alt+4 workspace number 4
+bindsym $alt+5 workspace number 5
+bindsym $alt+6 workspace number 6
+bindsym $alt+7 workspace number 7
+bindsym $alt+8 workspace number 8
+bindsym $alt+9 workspace number 9
+bindsym $alt+0 workspace number 10
+
+# move focused container to workspace
+bindsym $alt+Shift+1 move container to workspace number 1
+bindsym $alt+Shift+2 move container to workspace number 2
+bindsym $alt+Shift+3 move container to workspace number 3
+bindsym $alt+Shift+4 move container to workspace number 4
+bindsym $alt+Shift+5 move container to workspace number 5
+bindsym $alt+Shift+6 move container to workspace number 6
+bindsym $alt+Shift+7 move container to workspace number 7
+bindsym $alt+Shift+8 move container to workspace number 8
+bindsym $alt+Shift+9 move container to workspace number 9
+bindsym $alt+Shift+0 move container to workspace number 0
+
+
+# Assign apps to workspaces
+# (Terminals)
+# assign [class="kitty"] 1
+#assign [class="Alacritty"] 1
+
+# (Browsers)
+#assign [class="Brave"] 2
+#assign [class="firefox"] 2
+#assign [class="Chromium"] 2
+
+# (Games)
+#assign [class="Lutris"] 3
+#assign [class="Roblox"] 3
+#assign [class="bottles"] 3
+#assign [class="robloxplayerbeta.exe"] 3
+#assign [class="robloxplayerlauncher.exe"] 3
+
+# (Chatting Services)
+#assign [class="Discord"] 4
+#assign [class="Vencord"] 4
+#assign [class="Vesktop"] 4
+
+# (virtual machines)
+#assign [class="virt-manager"] 5 
+#assign [class="Virt-manager"] 5
+
+# Reload config, Restart config, Logout
+bindsym $alt+Shift+c reload
+bindsym $alt+Shift+r restart
+bindsym $alt+Shift+m exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+bindsym $alt+space focus mode_toggle
+bindsym $alt+Shift+space floating toggle

@@ -1,0 +1,25 @@
+import = ["~/.cache/wal/colors-alacritty.toml"]
+
+[font]
+size = 13.0
+
+[font.bold]
+family = "CaskaydiaCove Nerd Font"
+style = "Bold"
+
+[font.bold_italic]
+family = "CaskaydiaCove Nerd Font"
+style = "Bold Italic"
+
+[font.italic]
+family = "CaskaydiaCove Nerd Font"
+style = "Italic"
+
+[font.normal]
+family = "CaskaydiaCove Nerd Font"
+style = "Regular"
+
+[window]
+opacity = 0.9
+padding.x = 10
+padding.y = 10
