@@ -10,7 +10,7 @@ Paste this code into your nearest terminal to get started with the installer:
 
 ```sh
 git clone https://github.com/POP303U/i3-pywal
-cd dotfiles/setup-i3
+cd i3-pywal/setup-i3
 ./install
 ```
 
