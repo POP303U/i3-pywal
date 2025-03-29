@@ -14,10 +14,7 @@ cd i3-pywal/setup-i3
 ./install
 ```
 
-You don't have to clone the repo twice if you want to install both i3 and Hyprland
-just go to the setup folder corresponding for your install and run the installer!
-
-Select your profile to install and you're ready to go!
+Make sure you authorise sudo if you are prompted to.
 
 ***Done!***
 
