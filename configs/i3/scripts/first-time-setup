@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+if [[ -f ~/.config/i3/boot ]]; then
+    echo "Old boot found..."
+    wal -R
+else
+    echo "New installation detected!"
+    touch ~/.config/i3/boot
+    wal -i ~/.config/i3/walls/gen-rain_world3.png
+fi
