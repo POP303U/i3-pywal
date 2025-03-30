@@ -1,12 +1,12 @@
-# dotfiles
+# dotfiles  
 
-Personal dotfiles
-This repository contains the continuation of [lightweight-i3-config](https://github.com/POP303U/lightweight-i3-config)!
-And prequel to my personal Hyprland config!
+Personal dotfiles  
+This repository is a continuation of [lightweight-i3-config](https://github.com/POP303U/lightweight-i3-config)  
+and the prequel to my personal Hyprland configuration!  
 
-**How to install**
+## **How to Install**  
 
-Paste this code into your nearest terminal to get started with the installer:
+Run the following command in your terminal to start the installer:  
 
 ```sh
 git clone https://github.com/POP303U/i3-pywal
@@ -14,20 +14,21 @@ cd i3-pywal/setup-i3
 ./install
 ```
 
-Make sure you authorise sudo if you are prompted to.
+Make sure to authorize `sudo` if prompted.  
 
-***Done!***
+***Done!***  
 
-## **Current Setup!**
-![Mi_7__Feb_19_41_49_CET_2024_](https://github.com/POP303U/i3-pywal/assets/115036828/fb635fe0-78cf-431c-99bf-f16df9abcd01)
+## **Current Setup**  
+![Mi_7__Feb_19_41_49_CET_2024_](https://github.com/user-attachments/assets/d20d6e97-4165-4ad9-a464-855f48f8619c)
 
-**Troubleshooting**
+## **Troubleshooting**  
 
-If errors occur (no transparency, no statusbar, etc...) look at the neccessary packages!
-Be ready to read errors and google if you don't understand something.
-Read the documentation and the many config guides. I recommend you have at least some experience before trying my configs.
+If errors occur (e.g., no transparency, no status bar, etc.), check if all necessary packages are installed.  
+Be prepared to read error messages and search online if you don’t understand something.  
+I recommend having at least some experience before using my configurations.  
 
-**Use**
+## **Usage**  
 
-These files are free of use for anybody, however credit must be given if my config / modified config is posted.
-Have fun customizing your own!
+These files are free for anyone to use. However, credit must be given if you publish my config or a modified version of it.  
+
+Have fun customizing your setup!
