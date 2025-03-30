@@ -1,6 +1,5 @@
-# dotfiles  
+# i3-pywal
 
-Personal dotfiles  
 This repository is a continuation of [lightweight-i3-config](https://github.com/POP303U/lightweight-i3-config)  
 and the prequel to my personal Hyprland configuration!  
 
