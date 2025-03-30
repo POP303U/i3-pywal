@@ -26,7 +26,7 @@ set $inner_gaps_size 10
 set $outer_gaps_size 1
 set $border_size 3
 set_from_resource $fg i3wm.color7 #f0f0f0
-set_from_resource $sg i3wm.color3 #f0f0f0
+set_from_resource $cl i3wm.color6 #f0f0f0
 set_from_resource $bg i3wm.color1 #f0f0f0
 
 # ------------------------- #
@@ -45,10 +45,11 @@ font pango:CaskaydiaCove Nerd Font, Italic $font_size
 exec --no-startup-id lxpolkit
 exec --no-startup-id dunst
 exec --no-startup-id cmus-discord-rpc
+exec_always --no-startup-id xrandr --output HDMI-1 --mode 2560x1080
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id $HOME/.config/i3/scripts/first-time-setup
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+#exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
 
 # rofi 
 bindsym $alt+d exec "~/.config/i3/scripts/manage-rofi rofi"
@@ -111,7 +112,7 @@ bindsym $alt+Shift+d exec --no-startup-id rustup doc
 bindsym $alt+Shift+w exec --no-startup-id firefox
 
 # class                 border  backgr. (     ) indica. child_border
-client.focused          $bg     $bg     $fg  $bg       $sg
+client.focused          $bg     $bg     $fg  $bg       $cl
 client.focused_inactive $bg     $bg     $fg  $bg       $bg
 client.unfocused        $bg     $bg     $fg  $bg       $bg
 client.urgent           $bg     $bg     $fg  $bg       $bg
@@ -242,7 +243,6 @@ bindsym $alt+Shift+0 move container to workspace number 0
 # Reload config, Restart config, Logout
 bindsym $alt+Shift+c reload
 bindsym $alt+Shift+r restart
-bindsym $alt+Shift+m exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 bindsym $alt+space focus mode_toggle
 bindsym $alt+Shift+space floating toggle
