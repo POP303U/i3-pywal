@@ -45,11 +45,12 @@ font pango:CaskaydiaCove Nerd Font, Italic $font_size
 exec --no-startup-id lxpolkit
 exec --no-startup-id dunst
 exec --no-startup-id cmus-discord-rpc
-exec_always --no-startup-id xrandr --output HDMI-1 --mode 2560x1080
+exec --no-startup-id autotiling
 exec_always --no-startup-id xmodmap ~/.Xmodmap
 exec_always --no-startup-id $HOME/.config/i3/scripts/first-time-setup
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-#exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf
+#exec_always --no-startup-id xrandr --output HDMI-1 --mode 2560x1080
 
 # rofi 
 bindsym $alt+d exec "~/.config/i3/scripts/manage-rofi rofi"
