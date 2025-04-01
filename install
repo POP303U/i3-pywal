@@ -93,16 +93,16 @@ start_wireless() {
 }
 
 copy_config() {
-    cp -r ../configs/alacritty     ~/.config && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
-    cp -r ../configs/polybar       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied polybar to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy polybar to ~/.config"
-    cp -r ../configs/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy dunst to ~/.config"
-    cp -r ../configs/picom         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied picom to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy picom to ~/.config"
-    cp -r ../configs/rofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied rofi to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
-    cp -r ../configs/i3            ~/.config && echo -e "[${BLUE}ok${RESET}] Copied i3 to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy i3 to ~/.config"
-    cp -r ../configs/.tmux.conf            ~ && echo -e "[${BLUE}ok${RESET}] Copied .tmux.conf to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy tmux to ~/"
-    cp -r ../configs/.bashrc               ~ && echo -e "[${BLUE}ok${RESET}] Copied .bashrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy .bashrc to ~/"
-    cp -r ../configs/.Xmodmap              ~ && echo -e "[${BLUE}ok${RESET}] Copied .Xmodmap to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
-    cp -r ../configs/.xinitrc              ~ && echo -e "[${BLUE}ok${RESET}] Copied .xinitrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
+    cp -r ./configs/alacritty     ~/.config && echo -e "[${BLUE}ok${RESET}] Copied alacritty to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
+    cp -r ./configs/polybar       ~/.config && echo -e "[${BLUE}ok${RESET}] Copied polybar to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy polybar to ~/.config"
+    cp -r ./configs/dunst         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied dunst to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy dunst to ~/.config"
+    cp -r ./configs/picom         ~/.config && echo -e "[${BLUE}ok${RESET}] Copied picom to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy picom to ~/.config"
+    cp -r ./configs/rofi          ~/.config && echo -e "[${BLUE}ok${RESET}] Copied rofi to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/.config"
+    cp -r ./configs/i3            ~/.config && echo -e "[${BLUE}ok${RESET}] Copied i3 to ~/.config" || echo -e "[${RED}fail${RESET}] Failed to copy i3 to ~/.config"
+    cp -r ./configs/.tmux.conf            ~ && echo -e "[${BLUE}ok${RESET}] Copied .tmux.conf to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy tmux to ~/"
+    cp -r ./configs/.bashrc               ~ && echo -e "[${BLUE}ok${RESET}] Copied .bashrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy .bashrc to ~/"
+    cp -r ./configs/.Xmodmap              ~ && echo -e "[${BLUE}ok${RESET}] Copied .Xmodmap to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
+    cp -r ./configs/.xinitrc              ~ && echo -e "[${BLUE}ok${RESET}] Copied .xinitrc to ~/" || echo -e "[${RED}fail${RESET}] Failed to copy alacritty to ~/"
 }
 
 stage_1() {
