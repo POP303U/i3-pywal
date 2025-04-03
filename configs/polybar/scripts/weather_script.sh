@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Replace with your actual ZIP code
-ZIP_CODE="85055"
+# Get your zip code automatically
+ZIP_CODE="$(curl -s https://ipinfo.io/postal)"
 
 # Fetch the weather data
 WEATHER_JSON=$(curl -s "https://wttr.in/${ZIP_CODE}?format=j1")

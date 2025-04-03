@@ -22,9 +22,10 @@ Make sure to authorize `sudo` if prompted.
 
 ## **Troubleshooting**  
 
-If errors occur (e.g., no transparency, no status bar, etc.), check if all necessary packages are installed.  
-Be prepared to read error messages and search online if you don’t understand something.  
-I recommend having at least some experience before using my configurations.  
+- If your weather module isn't displaying the correct temperature, make sure to manually set the ```ZIPCODE``` variable in ```~/.config/polybar/scripts/weather_script.sh``` to match your location.
+- If errors occur like no transparency or broken animations try to disable picom (picom doesn't work well with old graphic cards).
+- Be prepared to read error messages and search online if you don’t understand something.  
+- I recommend having at least some experience with i3 and linux before using my configuration.  
 
 ## **Usage**  
 
