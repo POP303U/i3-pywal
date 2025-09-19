@@ -17,8 +17,9 @@ Make sure to authorize `sudo` if prompted.
 
 ***Done!***  
 
+
 ## **Current Setup**  
-![Mi_7__Feb_19_41_49_CET_2024_](https://github.com/user-attachments/assets/d20d6e97-4165-4ad9-a464-855f48f8619c)
+![preview](https://github.com/POP303U/i3-pywal/blob/main/preview.png?raw=true)
 
 ## **Troubleshooting**  
 
